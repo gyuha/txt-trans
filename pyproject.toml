@@ -9,6 +9,7 @@ packages = [{include = "txt_trans"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 googletrans = "^3.0.0"
+pillow = "^9.4.0"
 
 
 [build-system]
