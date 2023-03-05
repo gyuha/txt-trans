@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "txt-trans"
+version = "0.1.0"
+description = ""
+authors = ["gyuha <nicegyuha@gmail.com>"]
+readme = "README.md"
+packages = [{include = "txt_trans"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+googletrans = "^3.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
