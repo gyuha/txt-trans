@@ -13,15 +13,6 @@ pyenv install [version]
 
 ```
 
-## 파이썬 가상 환경 만들어 주기
-
-```
-python -m pip install virtualenv
-python -m virtualenv .venv
-.\.venv\Scripts\activate
-
-```
-
 ## poetry(패키지 관리자) 설치
 
 [](https://python-poetry.org/docs/)
@@ -56,6 +47,12 @@ poetry config virtualenvs.path "./.venv"
 ```
 peotry install
 .venv/Scripts/activate
+```
+
+`macos` or `linux`에서는 아래와 같이 실행 한다.
+
+```
+source .venv/bin/activate
 ```
 
 `peotry`를 해 주면.. `.venv` 폴더를 만들고 여기에 패키지를 설치해 준다.

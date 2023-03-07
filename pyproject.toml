@@ -7,9 +7,9 @@ readme = "README.md"
 packages = [{include = "txt_trans"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-googletrans = "^3.0.0"
-pillow = "^9.4.0"
+python = "^3.10.10"
+pyqt6 = "^6.4.2"
+googletrans = "4.0.0-rc1"
 
 
 [build-system]
