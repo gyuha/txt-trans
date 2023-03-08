@@ -10,6 +10,8 @@ packages = [{include = "txt_trans"}]
 python = "^3.10.10"
 pyqt6 = "^6.4.2"
 googletrans = "4.0.0-rc1"
+black = "^23.1.0"
+autopep8 = "^2.0.2"
 
 
 [build-system]

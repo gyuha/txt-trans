@@ -1,73 +1,71 @@
-from PyQt6.QtCore import Qt, QEvent
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QTableWidget, QTableWidgetItem, QPushButton
-from PyQt6.QtGui import QFont
+import sys
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QDropEvent
+from PyQt6.QtWidgets import (
+    QApplication,
+    QMainWindow,
+    QLabel,
+    QTableWidget,
+    QTableWidgetItem,
+    QPushButton,
+    QVBoxLayout,
+    QHBoxLayout,
+    QWidget,
+)
+from FileListTable import FileListTable
 
 
-WINDOW_WIDTH = 450
-WINDOW_HEIGHT = 450
-FONT_SIZE_TITLE = 22
-
-class MainWindow(QMainWindow):
+class SubtitleTranslator(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Subtitle Translator")
-        self.setGeometry(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT)
-        
-        # Add GUI elements here
-        title_label = QLabel("Subtitle Translator", self)
-        # title_label.setAlignment(Qt.AlignCenter)
-        title_label.setFont(QFont("Arial", FONT_SIZE_TITLE))
-        title_label.setGeometry(0, 0, WINDOW_WIDTH, 30)
+        self.setGeometry(100, 100, 450, 450)
 
-        file_table = QTableWidget(self)
-        file_table.setGeometry(0, 30, WINDOW_WIDTH, 300)
-        file_table.setColumnCount(2)
-        file_table.setHorizontalHeaderLabels(["Filename", "Status"])
-        file_table.setShowGrid(True)
+        # Title Label
+        lb_title = QLabel(self)
+        lb_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        lb_title.setStyleSheet("font-size: 22px;")
+        lb_title.setText("Subtitle Translator")
 
-        def add_file_to_list(filename):
-            row_position = file_table.rowCount()
-            file_table.insertRow(row_position)
-            file_table.setItem(row_position, 0, QTableWidgetItem(filename))
-            file_table.setItem(row_position, 1, QTableWidgetItem("untranslated"))
-        
-        file_table.viewport().installEventFilter(self)
+        # File List Table
+        self.tb_list = FileListTable(self)
+        self.tb_list.setColumnCount(2)
+        self.tb_list.setHorizontalHeaderLabels(["Filename", "Status"])
+        self.tb_list.setStyleSheet("border: 1px solid black;")
 
-        file_list_widget.dropEvent = lambda event: handle_file_drop([url.toLocalFile() for url in event.mimeData().urls()])
-        file_list_widget.setAcceptDrops(True)
+        # Table Header
+        self.hbox_header = QHBoxLayout()
+        self.hbox_header.addWidget(self.tb_list)
 
-        def handle_file_drop(file_paths):
-            print("Files dropped:", file_paths)
-            for file_path in file_paths:
-                add_file_to_list(file_path)
-        
-        def eventFilter(source, event):
-            if (event.type() == QEvent.DragEnter or
-                event.type() == QEvent.Drop) and event.mimeData().hasUrls():
-                event.acceptProposedAction()
-                if event.type() == QEvent.Drop:
-                    for url in event.mimeData().urls():
-                        add_file_to_list(url.toLocalFile())
-            else:
-                event.ignore()
-            return True
-        
-        def start_translation(self):
-            for row in range(file_table.rowCount()):
-                filename = file_table.item(row, 0).text()
-                # Translate the file here
-                file_table.setItem(row, 1, QTableWidgetItem("translated"))
+        # Start Button
+        self.btn_start = QPushButton(self)
+        self.btn_start.setStyleSheet("background-color: lightblue; font-size: 22px;")
+        self.btn_start.setText("Start")
 
-        start_button = QPushButton("Start", self)
-        start_button.setGeometry(0, 330, WINDOW_WIDTH, 30)
-        start_button.clicked.connect(start_translation)
-        
-        
+        # Button Layout
+        self.hbox_btn = QHBoxLayout()
+        self.hbox_btn.addStretch()
+        self.hbox_btn.addWidget(self.btn_start)
+
+        # Main Layout
+        self.vbox = QVBoxLayout()
+        self.vbox.addWidget(lb_title)
+        self.vbox.addLayout(self.hbox_header)
+        self.vbox.addLayout(self.hbox_btn)
+
+        # Set main layout
+        self.central_widget = QWidget(self)
+        self.central_widget.setLayout(self.vbox)
+        self.setCentralWidget(self.central_widget)
+
+        # Connect drag-and-drop events
+        self.tb_list.setDragEnabled(True)
+        self.tb_list.setAcceptDrops(True)
+
+        self.show()
+
+
 if __name__ == "__main__":
-    app = QApplication([])
-    window = MainWindow()
-    window.show()
-    app.exec()
-
-
-
+    app = QApplication(sys.argv)
+    window = SubtitleTranslator()
+    sys.exit(app.exec())
