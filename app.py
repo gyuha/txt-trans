@@ -1,71 +1,61 @@
-import sys
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QDropEvent
-from PyQt6.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QLabel,
-    QTableWidget,
-    QTableWidgetItem,
-    QPushButton,
-    QVBoxLayout,
-    QHBoxLayout,
-    QWidget,
-)
-from FileListTable import FileListTable
+import tkinter as tk
+from tkinter import ttk
 
 
-class SubtitleTranslator(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle("Subtitle Translator")
-        self.setGeometry(100, 100, 450, 450)
+class ListboxFrame(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.master.title("Listbox with header")
 
-        # Title Label
-        lb_title = QLabel(self)
-        lb_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        lb_title.setStyleSheet("font-size: 22px;")
-        lb_title.setText("Subtitle Translator")
+        # configure row and column weights for resizing
+        self.master.rowconfigure(0, weight=1)
+        self.master.columnconfigure(0, weight=1)
 
-        # File List Table
-        self.tb_list = FileListTable(self)
-        self.tb_list.setColumnCount(2)
-        self.tb_list.setHorizontalHeaderLabels(["Filename", "Status"])
-        self.tb_list.setStyleSheet("border: 1px solid black;")
+        self.tree = ttk.Treeview(self)
+        self.tree["columns"] = ("filename", "process")
+        self.tree.column("#0", width=0, stretch=tk.NO)
+        self.tree.column("filename", anchor=tk.W, width=120)
+        self.tree.column("process", anchor=tk.W, width=80)
 
-        # Table Header
-        self.hbox_header = QHBoxLayout()
-        self.hbox_header.addWidget(self.tb_list)
+        self.tree.heading("#0", text="", anchor=tk.W)
+        self.tree.heading("filename", text="파일명", anchor=tk.W)
+        self.tree.heading("process", text="처리", anchor=tk.W)
 
-        # Start Button
-        self.btn_start = QPushButton(self)
-        self.btn_start.setStyleSheet("background-color: lightblue; font-size: 22px;")
-        self.btn_start.setText("Start")
+        # insert some items
+        self.tree.insert(
+            parent="", index="end", iid=0, text="", values=("file1.txt", "Yes")
+        )
+        self.tree.insert(
+            parent="", index="end", iid=1, text="", values=("file2.txt", "No")
+        )
+        self.tree.insert(
+            parent="", index="end", iid=2, text="", values=("file3.txt", "Yes")
+        )
 
-        # Button Layout
-        self.hbox_btn = QHBoxLayout()
-        self.hbox_btn.addStretch()
-        self.hbox_btn.addWidget(self.btn_start)
+        # grid the treeview
+        self.tree.grid(row=0, column=0, sticky="nsew")
 
-        # Main Layout
-        self.vbox = QVBoxLayout()
-        self.vbox.addWidget(lb_title)
-        self.vbox.addLayout(self.hbox_header)
-        self.vbox.addLayout(self.hbox_btn)
+        # create close and run buttons
+        self.close_button = tk.Button(self, text="닫기", command=self.master.destroy)
+        self.run_button = tk.Button(self, text="실행", command=self.run)
 
-        # Set main layout
-        self.central_widget = QWidget(self)
-        self.central_widget.setLayout(self.vbox)
-        self.setCentralWidget(self.central_widget)
+        # grid the buttons
+        self.close_button.grid(row=1, column=0, sticky="e")
+        self.run_button.grid(row=1, column=0, sticky="w")
 
-        # Connect drag-and-drop events
-        self.tb_list.setDragEnabled(True)
-        self.tb_list.setAcceptDrops(True)
+    def run(self):
+        # get the selected item
+        selected_item = self.tree.focus()
+        # get the values of the selected item
+        values = self.tree.item(selected_item)["values"]
 
-        self.show()
+        # print the values
+        print(values)
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = SubtitleTranslator()
-    sys.exit(app.exec())
+    window = tk.Tk()
+    listbox_frame = ListboxFrame(window)
+    listbox_frame.pack()
+    window.mainloop()

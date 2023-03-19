@@ -117,6 +117,36 @@ files = [
 ]
 
 [[package]]
+name = "customtkinter"
+version = "5.1.2"
+description = "Create modern looking GUIs with Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "customtkinter-5.1.2-py3-none-any.whl", hash = "sha256:30fe0d40f0b43b60177e87013e932377a3ae8bf46921528488ae1adbb0aeafdf"},
+    {file = "customtkinter-5.1.2.tar.gz", hash = "sha256:eedaa11edce76b6882a605864a11b4859643ba0f4f456841aad51d89a758d32c"},
+]
+
+[package.dependencies]
+darkdetect = "*"
+
+[[package]]
+name = "darkdetect"
+version = "0.8.0"
+description = "Detect OS Dark Mode from Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "darkdetect-0.8.0-py3-none-any.whl", hash = "sha256:a7509ccf517eaad92b31c214f593dbcf138ea8a43b2935406bbd565e15527a85"},
+    {file = "darkdetect-0.8.0.tar.gz", hash = "sha256:b5428e1170263eb5dea44c25dc3895edd75e6f52300986353cd63533fe7df8b1"},
+]
+
+[package.extras]
+macos-listener = ["pyobjc-framework-Cocoa"]
+
+[[package]]
 name = "googletrans"
 version = "4.0.0rc1"
 description = "Free Google Translate API for Python. Translates totally free of charge."
@@ -394,6 +424,18 @@ files = [
 ]
 
 [[package]]
+name = "tkinterdnd2"
+version = "0.3.0"
+description = "TkinterDnD2 is a python wrapper for George Petasis'' tkDnD Tk extension version 2"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "tkinterdnd2-0.3.0-py3-none-any.whl", hash = "sha256:ef3ff4894c75e21ddc3252eb6d1292670824bf20240b9e82da9240631bbe63fe"},
+    {file = "tkinterdnd2-0.3.0.tar.gz", hash = "sha256:cb9d72634c42ff2e5a6e34823ef02f7722a5b6ad5cec5e1de82ec8f0c371a614"},
+]
+
+[[package]]
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
@@ -408,4 +450,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10.10"
-content-hash = "a4302bbb7da313a2514ca66b28f539f512259b21758f0ade5630d4afa714b873"
+content-hash = "0c9e7b0a1eb09bba37494181844ebdb7b28446ee6aed9fd69d68e02137ff0496"
