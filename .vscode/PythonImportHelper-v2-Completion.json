@@ -27,6 +27,14 @@
         "documentation": {}
     },
     {
+        "label": "Translator",
+        "importPath": "googletrans",
+        "description": "googletrans",
+        "isExtraImport": true,
+        "detail": "googletrans",
+        "documentation": {}
+    },
+    {
         "label": "tkinter",
         "kind": 6,
         "isExtraImport": true,
@@ -36,7 +44,7 @@
         "documentation": {}
     },
     {
-        "label": "ttk",
+        "label": "filedialog",
         "importPath": "tkinter",
         "description": "tkinter",
         "isExtraImport": true,
@@ -308,11 +316,110 @@
         "documentation": {}
     },
     {
-        "label": "ListboxFrame",
+        "label": "DragDropEntry",
         "kind": 6,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "class ListboxFrame(tk.Frame):\n    def __init__(self, master=None):\n        super().__init__(master)\n        self.master = master\n        self.master.title(\"Listbox with header\")\n        # configure row and column weights for resizing\n        self.master.rowconfigure(0, weight=1)\n        self.master.columnconfigure(0, weight=1)\n        self.tree = ttk.Treeview(self)\n        self.tree[\"columns\"] = (\"filename\", \"process\")",
+        "peekOfCode": "class DragDropEntry(tk.Entry):\n    def __init__(self, master, **kw):\n        tk.Entry.__init__(self, master, **kw)\n        # 드래그 이벤트에 대한 바인딩 추가\n        self.bind(\"<Drop>\", self.drop_event)\n    def drop_event(self, event):\n        # 드롭된 파일 경로 추출\n        file_path = event.data\n        # Entry 위젯에 경로 삽입\n        self.delete(0, tk.END)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "translate_files",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def translate_files():\n    # 번역할 언어 선택\n    target_lang = \"ko\"\n    # 시작 폴더 경로 설정\n    start_folder = folder_path.get()\n    # 번역할 파일 확장자 리스트\n    extensions = [ext.strip() for ext in extension_entry.get().split(\",\")]\n    # 하위 폴더의 모든 파일에서 확장자가 extensions 리스트에 있는 파일을 찾아 번역\n    for root, dirs, files in os.walk(start_folder):\n        for filename in files:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "select_folder",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def select_folder():\n    # 폴더 선택 다이얼로그 열기\n    folder_path.set(filedialog.askdirectory())\n# tkinter 윈도우 생성\nwindow = tk.Tk()\nwindow.geometry(\"500x300\")\n# 윈도우 제목 설정\nwindow.title(\"파일 번역기\")\n# 폴더 선택 라벨\nfolder_label = tk.Label(text=\"폴더 선택\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "translator",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "translator = Translator(service_urls=[\"translate.google.com\"])\nprint(tk.TkVersion)\ndef translate_files():\n    # 번역할 언어 선택\n    target_lang = \"ko\"\n    # 시작 폴더 경로 설정\n    start_folder = folder_path.get()\n    # 번역할 파일 확장자 리스트\n    extensions = [ext.strip() for ext in extension_entry.get().split(\",\")]\n    # 하위 폴더의 모든 파일에서 확장자가 extensions 리스트에 있는 파일을 찾아 번역",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "window",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "window = tk.Tk()\nwindow.geometry(\"500x300\")\n# 윈도우 제목 설정\nwindow.title(\"파일 번역기\")\n# 폴더 선택 라벨\nfolder_label = tk.Label(text=\"폴더 선택\")\nfolder_label.pack()\n# 폴더 선택 박스\nfolder_path = tk.StringVar()\nfolder_entry = tk.Entry(textvariable=folder_path)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "folder_label",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "folder_label = tk.Label(text=\"폴더 선택\")\nfolder_label.pack()\n# 폴더 선택 박스\nfolder_path = tk.StringVar()\nfolder_entry = tk.Entry(textvariable=folder_path)\nfolder_entry.pack()\n# 폴더 입력 박스에 DropTarget 기능 추가\nDragDropEntry(folder_entry)\n# 폴더 선택 버튼\nfolder_button = tk.Button(text=\"폴더 선택\", command=select_folder)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "folder_path",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "folder_path = tk.StringVar()\nfolder_entry = tk.Entry(textvariable=folder_path)\nfolder_entry.pack()\n# 폴더 입력 박스에 DropTarget 기능 추가\nDragDropEntry(folder_entry)\n# 폴더 선택 버튼\nfolder_button = tk.Button(text=\"폴더 선택\", command=select_folder)\nfolder_button.pack()\n# 확장자 입력 라벨\nextension_label = tk.Label(text=\"확장자 입력 (여러 개일 경우 ,로 구분)\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "folder_entry",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "folder_entry = tk.Entry(textvariable=folder_path)\nfolder_entry.pack()\n# 폴더 입력 박스에 DropTarget 기능 추가\nDragDropEntry(folder_entry)\n# 폴더 선택 버튼\nfolder_button = tk.Button(text=\"폴더 선택\", command=select_folder)\nfolder_button.pack()\n# 확장자 입력 라벨\nextension_label = tk.Label(text=\"확장자 입력 (여러 개일 경우 ,로 구분)\")\nextension_label.pack()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "folder_button",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "folder_button = tk.Button(text=\"폴더 선택\", command=select_folder)\nfolder_button.pack()\n# 확장자 입력 라벨\nextension_label = tk.Label(text=\"확장자 입력 (여러 개일 경우 ,로 구분)\")\nextension_label.pack()\n# 확장자 입력 박스\nextension_entry = tk.Entry()\nextension_entry.insert(0, \"srt,vtt\")\nextension_entry.pack()\n# 실행 버튼",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "extension_label",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "extension_label = tk.Label(text=\"확장자 입력 (여러 개일 경우 ,로 구분)\")\nextension_label.pack()\n# 확장자 입력 박스\nextension_entry = tk.Entry()\nextension_entry.insert(0, \"srt,vtt\")\nextension_entry.pack()\n# 실행 버튼\nrun_button = tk.Button(text=\"실행\", command=translate_files)\nrun_button.pack()\n# 윈도우 실행",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "extension_entry",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "extension_entry = tk.Entry()\nextension_entry.insert(0, \"srt,vtt\")\nextension_entry.pack()\n# 실행 버튼\nrun_button = tk.Button(text=\"실행\", command=translate_files)\nrun_button.pack()\n# 윈도우 실행\nwindow.mainloop()",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "run_button",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "run_button = tk.Button(text=\"실행\", command=translate_files)\nrun_button.pack()\n# 윈도우 실행\nwindow.mainloop()",
         "detail": "app",
         "documentation": {}
     },
